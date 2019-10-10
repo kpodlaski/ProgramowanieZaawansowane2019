@@ -1,4 +1,4 @@
-from matrix_operations import mat_mul
+from zaj1.matrix_operations import mat_mul
 
 zakres = range (0,5)
 a = "Olaf"
