@@ -10,12 +10,22 @@ def proste_operacje(kursy):
     row_id = usd.idxmin()
     print(kursy.loc[row_id]['data'])
 
+def stats_for_dataframe(kursy, start_date, end_date):
+    m_kursy = kursy.loc[kursy.data < end_date]
+    m_kursy = m_kursy.loc[kursy.data > start_date]
+    mean # = policzyć
+    std # = pliczyć
+    return mean, std
 
-def count_avg_in_month(kursy, month):
-    #wyszukiwanie rekordów w stuczniu 2019
-    m_kursy = kursy.loc[kursy.data<'20190200']
-    m_kursy = m_kursy.loc.loc[kursy.data>'20190100']
-    print(m_kursy)
+def count_avg_in_month(kursy, year, month):
+    start_date= '{0}{1:02d}{2:02d}'.format(year,month,0)
+    if month == 12 :
+        end_date = '{0}{1:02d}{2:02d}'.format(year+1,0,0)
+    else :
+        end_date = '{0}{1:02d}{2:02d}'.format(year, month+1, 0)
+
+
+    return stats_for_dataframe(kursy, start_date, end_date)
 
 if __name__=="__main__":
     kursy = pd.read_csv("../data/nbp_kursy_2019.csv"
@@ -25,7 +35,9 @@ if __name__=="__main__":
                         engine="python"
                         )
     #proste_operacje(kursy)
-    count_avg_in_month(kursy,1)
+    mean, std = count_avg_in_month(kursy,2019, 1)
+    print(mean, " : ", std)
+
 
 ## Zadania do wykonania:
 ## Policzyć średnią w miesiącu (I-IX, 2019)
