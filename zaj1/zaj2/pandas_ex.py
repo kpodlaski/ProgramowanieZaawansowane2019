@@ -18,6 +18,11 @@ kursy = pd.read_csv("../data/nbp_kursy_2019.csv"
                     decimal=",",
                     engine="python"
                     )
+
+if __name__=="__main__":
+    proste_operacje(kursy)
+
+
 ## Zadania do wykonania:
 ## Policzyć średnią w miesiącu (I-IX, 2019)
 ## Odchylenie standardowe w każdym miesiącu (I-IX, 2019)
