@@ -1,4 +1,7 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 
 
 def proste_operacje(kursy):
@@ -67,7 +70,30 @@ if __name__=="__main__":
     print('-------------')
     print('Najgorszy kwartał Q{0}: zmiana={1:0.3f}'.format(period_with_maximal_change, maximal_change))
     print('-------------')
+    _usd = kursy[2:-3]
+    _usd['1USD'] = _usd['1USD'].astype('float64')
+    _usd['data'] = _usd['data'].astype('float64')%10000
+    print(_usd)
+    p=_usd.plot(x='data', y='1USD', kind='scatter')
+    #plt.ylim(0,4.2)
+    plt.savefig("../out/usd.png")
+    model = LinearRegression()
+    x =  _usd['data'].values.reshape(-1,1)
+    #print(x.shape)
+    #print(x.reshape(2,2,49))
+    #exit(10)
+    y = _usd['1USD'].values.reshape(-1,1)
+    print(y.shape)
+    model.fit(x,y)
 
+    print("y={1}x+{0}".format(model.intercept_[0],model.coef_[0]))
+    y_predicted = model.predict(x)
+    plt.plot(x,y_predicted,color='r')
+    plt.show()
+    plt.close()
+
+    r2 = r2_score(y, y_predicted)
+    print(r2)
 
 ## Zadania do wykonania:
 ## Policzyć średnią w miesiącu (I-IX, 2019)
