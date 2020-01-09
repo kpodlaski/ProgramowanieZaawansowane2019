@@ -1,4 +1,5 @@
 import tensorflow as tf
+tf.compat.v1.disable_eager_execution()
 
 kernel = tf.constant([
 [
@@ -19,10 +20,11 @@ kernel = tf.constant([
 
 padding = "SAME"
 stride = 1
-file = tf.io.read_file('../data/frederick.png')
+file = tf.io.read_file("../data/person_2.png")
+print(file)
 image = tf.image.decode_png(file)
 
-input  = tf.reshape(image, [1, 128, 171, 3],name='image')
+input  = tf.reshape(image, [1, 128, 170, 3],name='image')
 input_2 = tf.cast(input,tf.float32)
 
 a = tf.nn.conv2d(input_2, kernel, [1, stride, stride, 1], padding=padding)
@@ -33,5 +35,5 @@ to_file = tf.cast(result, tf.uint8)
 op = tf.image.encode_png(to_file)
 wf = tf.io.write_file('../data/test_file.png',op)
 
-with tf.Session() as sess:
+with tf.compat.v1.Session() as sess:
     sess.run(wf)
