@@ -1,3 +1,4 @@
+import cv2
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
@@ -20,12 +21,13 @@ kernel = tf.constant([
 
 padding = "SAME"
 stride = 1
-file = tf.io.read_file("../data/person_2.png")
-print(file)
-image = tf.image.decode_png(file)
+image = cv2.imread("../data/person_2.png")
+
 
 input  = tf.reshape(image, [1, 128, 170, 3],name='image')
 input_2 = tf.cast(input,tf.float32)
+
+print("input_2",input_2)
 
 a = tf.nn.conv2d(input_2, kernel, [1, stride, stride, 1], padding=padding)
 b = tf.minimum(tf.nn.relu(a),255)
