@@ -14,13 +14,13 @@ model = tf.keras.models.Sequential(
     [   #LENET5 https://engmrk.com/lenet-5-a-classic-cnn-architecture/
         #tf.keras.layers.Flatten(input_shape=(28,28)),
         tf.keras.layers.Conv2D(6, kernel_size=(5,5), strides=(1,1),
-                               input_shape=(28,28,1)),
+                               input_shape=(28,28,1), activation=tf.nn.tanh),
         tf.keras.layers.AvgPool2D(pool_size=(2,2),strides=(2,2)),
-        tf.keras.layers.Conv2D(16, kernel_size=(5, 5), strides=(1, 1)),
+        tf.keras.layers.Conv2D(16, kernel_size=(5, 5), strides=(1, 1), activation=tf.nn.tanh),
         tf.keras.layers.AvgPool2D(pool_size=(2, 2), strides=(2, 2)),
-        tf.keras.layers.Conv2D(120, kernel_size=(2, 2), strides=(1, 1)),
+        tf.keras.layers.Conv2D(120, kernel_size=(2, 2), strides=(1, 1), activation=tf.nn.tanh),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(86, activation=tf.nn.sigmoid),  # tf.nn.relu
+        tf.keras.layers.Dense(86, activation=tf.nn.tanh),  # tf.nn.relu
         tf.keras.layers.Dense(10,activation=tf.nn.softmax)
     ]
 )
@@ -46,7 +46,7 @@ print('train inputs:',train_inputs.shape)
 print('test labels:',test_labels.shape)
 print('test inputs:',test_inputs.shape)
 
-model.fit(train_inputs, train_labels,epochs=10, batch_size=100)
+model.fit(train_inputs, train_labels,epochs=8, batch_size=100, verbose=1)
 
 
 test_loss, test_acc = model.evaluate(test_inputs, test_labels)
